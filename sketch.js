@@ -1316,11 +1316,8 @@ function clearSpecificListeners(prefixSelector) {
 
 function setupPwaInstall() {
     window.addEventListener('beforeinstallprompt', (e) => {
-        // Verhindert, dass Chrome auf Android 68+ die Mini-Infobar anzeigt
         e.preventDefault();
-        // Speichert das Event, damit es später ausgelöst werden kann.
         deferredPrompt = e;
-        // Zeigt unseren benutzerdefinierten Installations-Button an
         if (installButton) {
             installButton.removeClass('hidden');
             console.log('`beforeinstallprompt` event was fired.');
@@ -1329,20 +1326,15 @@ function setupPwaInstall() {
 
     if (installButton) {
         installButton.mousePressed(async () => {
-            // Verstecke unseren Button, da der Dialog jetzt gezeigt wird
             installButton.addClass('hidden');
-            // Zeige den Installations-Dialog an
             deferredPrompt.prompt();
-            // Warte auf die Antwort des Benutzers
             const { outcome } = await deferredPrompt.userChoice;
             console.log(`User response to the install prompt: ${outcome}`);
-            // Wir können den Dialog nur einmal verwenden.
             deferredPrompt = null;
         });
     }
 
     window.addEventListener('appinstalled', () => {
-        // Verstecke den Button, falls die App installiert wurde
         if (installButton) {
             installButton.addClass('hidden');
         }
