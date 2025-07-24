@@ -6,8 +6,6 @@ let currentDifficulty = null; // Speichert die Schwierigkeit (z.B. 'grundlagen')
 let currentTask = null; // Das aktuell angezeigte Aufgabenobjekt inkl. explanationKeys
 // --- Globale Variablen ---
 let deferredPrompt; // Für das Installations-Event
-let installButton;  // Für den Installations-Button
-// ... (der Rest deiner Variablen bleibt gleich)
 
 // --- Referenzen zu HTML Elementen ---
 let mainNavDiv, categorySelectionDiv, difficultySelectionDiv, taskControlsDiv, explanationSectionDiv;
@@ -825,7 +823,6 @@ function fetchAllDOMElements() {
     explanationContentBody = select('#explanation-content-body');
     btnBackFromContent = select('#btn-back-from-content'); // Zurück vom Inhalt zur Übersicht
     btnShowExplanation = select('#btn-show-explanation'); // Der neue Erklärung-Button
-    installButton = select('#btn-install');
 }
 
 function attachStaticEventListeners() {
@@ -1315,28 +1312,46 @@ function clearSpecificListeners(prefixSelector) {
 // NEUE FUNKTION AM ENDE VON sketch.js HINZUFÜGEN
 
 function setupPwaInstall() {
+    // Dieser Listener wird sofort beim Laden des Skripts aktiv.
     window.addEventListener('beforeinstallprompt', (e) => {
+        // Verhindert die Standard-Mini-Infobar von Chrome
         e.preventDefault();
+        // Speichert das Event, damit wir es später auslösen können
         deferredPrompt = e;
-        if (installButton) {
-            installButton.removeClass('hidden');
-            console.log('`beforeinstallprompt` event was fired.');
+        
+        // Loggt, dass das Event empfangen wurde (wichtig für die Fehlersuche)
+        console.log('`beforeinstallprompt` event was fired.');
+
+        // Findet den Button mit Standard-JavaScript, unabhängig von p5.js
+        const installButtonElement = document.getElementById('btn-install');
+
+        if (installButtonElement) {
+            // Macht den Button sichtbar
+            installButtonElement.classList.remove('hidden');
+
+            // Fügt einen Standard-Click-Listener hinzu
+            installButtonElement.addEventListener('click', async () => {
+                // Versteckt unseren Button, da der Dialog jetzt erscheint
+                installButtonElement.classList.add('hidden');
+                
+                // Zeigt den Installations-Dialog des Browsers an
+                deferredPrompt.prompt();
+                
+                // Wartet auf die Antwort des Benutzers
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                
+                // Das Event kann nur einmal verwendet werden
+                deferredPrompt = null;
+            });
         }
     });
 
-    if (installButton) {
-        installButton.mousePressed(async () => {
-            installButton.addClass('hidden');
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log(`User response to the install prompt: ${outcome}`);
-            deferredPrompt = null;
-        });
-    }
-
     window.addEventListener('appinstalled', () => {
-        if (installButton) {
-            installButton.addClass('hidden');
+        // Versteckt den Button, falls die App erfolgreich installiert wurde
+        const installButtonElement = document.getElementById('btn-install');
+        if (installButtonElement) {
+            installButtonElement.classList.add('hidden');
         }
         deferredPrompt = null;
         console.log('PWA was installed');
