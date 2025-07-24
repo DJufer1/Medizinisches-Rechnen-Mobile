@@ -1,0 +1,632 @@
+/* === VOLLSTÄNDIGER ANGEPASSTER CSS-CODE (v3) === */
+
+:root {
+    /* --- Kahoot-inspirierte Farbpalette --- */
+    --primary-color-dark: #2a41b1;     /* Dunkleres Blau (weniger genutzt für Buttons) */
+    --primary-color: #3b5bdb;         /* Helles Blau (weniger genutzt für Buttons) */
+    --primary-color-light: #6f7ff1;    /* Sehr helles Blau */
+
+    /* Orange wird zur Haupt-Aktionsfarbe */
+    --accent-color: #ff9800;
+    --accent-color-light: #ffb74d;
+    --accent-color-dark: #f57c00;     /* Dunkleres Orange für Schatten */
+
+    /* Erfolg/Warnung/Fehler Farben */
+    --success-color: #00a989;         /* Teal/Grün */
+    --success-color-dark: #00876e;
+    --warning-color: #ffc700;         /* Gelb / Gold */
+    --warning-color-dark: #cc9f00;
+    --danger-color: #e53935;          /* Rot */
+    --danger-bg-light: #ffcdd2;
+    --danger-border: #ef9a9a;
+    --danger-text: #b71c1c;
+
+    /* Info / Lösungsbereich */
+    --info-color: var(--primary-color-dark); /* Original Blau für Lösungstext */
+    --info-bg-light: #e8eaf6;
+    --info-border: #c5cae9;
+
+    /* NEUE Hellblau-Variablen für Zurück-Buttons */
+    --light-blue-base: #42a5f5;        /* Helleres Blau */
+    --light-blue-light: #90caf9;       /* Noch heller für Verlauf */
+    --light-blue-dark: #1e88e5;        /* Dunkler für Schatten/Rand */
+
+    /* Hintergrund & Oberflächen */
+    --bg-color: #46178f;              /* Dunkles Lila als Hintergrund */
+    --surface-color: #ffffff;         /* Weiss für Container */
+    --surface-alt-color: #f5f5f5;     /* Helles Grau für abgesetzte Bereiche */
+    --border-color: #e0e0e0;          /* Heller Rand für Inputs etc. */
+
+    /* Textfarben */
+    --text-color: #212529;            /* Dunkler Text auf weissen Flächen */
+    --text-muted-color: #757575;      /* Gedämpfter Text */
+    --text-on-primary: #ffffff;       /* Weisser Text (gilt für Orange, Grün, Hellblau) */
+    --text-on-warning: #333333;       /* Dunkler Text auf gelben/goldenen Buttons */
+    --text-on-bg: #ffffff;            /* Weisser Text auf dunklem Hintergrund */
+
+    /* --- Typografie --- */
+    --font-family: 'Montserrat', sans-serif;
+    --base-font-size: 16px;
+
+    /* --- Sonstiges --- */
+    --border-radius: 12px;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Basis-Styling --- */
+body {
+    font-family: var(--font-family);
+    font-size: var(--base-font-size);
+    padding: 25px;
+    background-color: var(--bg-color);
+    color: var(--text-on-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    line-height: 1.6;
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+h1 {
+    color: var(--text-on-bg);
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 2.2em;
+}
+
+h2 {
+    margin-top: 0;
+    color: var(--primary-color-dark); /* Behält das Original-Blau für Titel */
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    font-size: 1.5em;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+h3 {
+     color: var(--primary-color); /* Behält das Original-Blau */
+     font-size: 1.3em;
+     font-weight: 600;
+     margin-top: 1.2em;
+     margin-bottom: 0.8em;
+}
+
+h4 {
+     margin-top: 15px;
+     margin-bottom: 8px;
+     color: var(--text-color);
+     font-size: 1.15em;
+     padding-bottom: 3px;
+     font-weight: 600;
+}
+
+/* --- Container --- */
+.controls {
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    padding: 35px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    width: 90%;
+    max-width: 750px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    box-sizing: border-box;
+}
+
+/* --- Spezielles Styling für Startseite --- */
+#main-nav {
+    align-items: center;
+    padding: 45px 35px;
+}
+.welcome-message {
+    font-size: 1.15em;
+    color: var(--text-muted-color);
+    text-align: center;
+    margin-bottom: 30px;
+}
+.main-buttons {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    display: flex;
+    width: auto;
+    max-width: none;
+}
+@media (max-width: 600px) {
+    .main-buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 400px;
+        align-items: stretch;
+    }
+}
+
+/* --- Allgemeines Button Styling (Hauptfarbe jetzt ORANGE) --- */
+button {
+    font-family: var(--font-family);
+    font-weight: 700;
+    padding: 14px 28px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1.05em;
+    text-align: center;
+    color: var(--text-on-primary);
+    /* NEU: Orange Verlauf */
+    background-image: linear-gradient(to bottom, var(--accent-color-light), var(--accent-color));
+    /* NEU: Orange Schatten */
+    box-shadow: 0 4px 0 var(--accent-color-dark), 0 6px 10px rgba(0,0,0,0.2);
+    transition: background-image 0.2s ease,
+                box-shadow 0.2s ease;
+    min-width: 130px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    transform: rotate(0deg) scale(1);
+}
+
+button:hover {
+    /* NEU: Orange Hover */
+    background-image: linear-gradient(to bottom, var(--accent-color), var(--accent-color-light));
+    box-shadow: 0 2px 0 var(--accent-color-dark), 0 4px 8px rgba(0,0,0,0.25);
+    /* Animation bleibt */
+    animation: button-wobble 0.35s linear infinite;
+}
+
+button:active {
+    animation: none;
+    /* NEU: Orange Active */
+    background-image: linear-gradient(to top, var(--accent-color-light), var(--accent-color));
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
+    transform: scale(0.98) translateY(2px);
+}
+
+/* Button Gruppen */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+    width: 100%;
+    max-width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Button-Gruppe in Task-Ansicht */
+#task-controls .button-group.task-actions {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: none;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+    gap: 15px;
+}
+.task-actions > div {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* --- Spezielle Button Farben --- */
+
+/* Anpassung für Zurück-Buttons (HELLBLAU) */
+button.btn-back {
+    background-image: linear-gradient(to bottom, var(--light-blue-light), var(--light-blue-base));
+    color: var(--text-on-primary);
+    border: 1px solid var(--light-blue-dark);
+    box-shadow: 0 4px 0 var(--light-blue-dark), 0 6px 10px rgba(0,0,0,0.15);
+}
+button.btn-back:hover {
+    background-image: linear-gradient(to bottom, var(--light-blue-base), var(--light-blue-light));
+    border-color: #1976d2; /* Darker blue border on hover */
+    color: var(--text-on-primary);
+    box-shadow: 0 2px 0 var(--light-blue-dark), 0 4px 8px rgba(0,0,0,0.2);
+    /* Wobble is inherited */
+}
+button.btn-back:active {
+    background-image: linear-gradient(to top, var(--light-blue-light), var(--light-blue-base));
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+    transform: scale(0.98) translateY(1px);
+    animation: none;
+}
+
+button.next-button {
+    /* NEU: Hellblau als Basisfarbe (wie .btn-back) */
+    background-image: linear-gradient(to bottom, var(--light-blue-light), var(--light-blue-base));
+    color: var(--text-on-primary); /* Weisser Text */
+    border: 1px solid var(--light-blue-dark); /* Dunklerer hellblauer Rand */
+    box-shadow: 0 4px 0 var(--light-blue-dark), 0 6px 10px rgba(0,0,0,0.15); /* Dunklerer hellblauer Schatten */
+}
+
+button.next-button:hover {
+    /* NEU: Hellblau Hover (wie .btn-back:hover) */
+    background-image: linear-gradient(to bottom, var(--light-blue-base), var(--light-blue-light));
+    border-color: #1976d2; /* Noch etwas dunklerer Rand bei Hover */
+    color: var(--text-on-primary);
+    box-shadow: 0 2px 0 var(--light-blue-dark), 0 4px 8px rgba(0,0,0,0.2); /* Schatten reduziert */
+    /* Die Wobble-Animation wird geerbt */
+}
+
+button.next-button:active {
+    /* NEU: Hellblau Active (wie .btn-back:active) */
+    background-image: linear-gradient(to top, var(--light-blue-light), var(--light-blue-base));
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); /* Innerer Schatten */
+    transform: scale(0.98) translateY(1px);
+    animation: none;
+}
+
+
+/* "Erklärung" Button im Task (WEISS/GRAU) */
+button.explanation-button {
+    background-image: linear-gradient(to bottom, #f8f9fa, #e9ecef); /* Heller Grauverlauf */
+    color: var(--text-color); /* Dunkler Text */
+    border: 1px solid var(--border-color); /* Heller Rand */
+    box-shadow: 0 2px 0 #bdbdbd, 0 3px 5px rgba(0,0,0,0.1); /* Flacher Schatten */
+}
+button.explanation-button:hover {
+    background-image: linear-gradient(to bottom, #ffffff, #f1f3f5); /* Etwas heller */
+    border-color: var(--primary-color, #3b5bdb); /* Blauer Rand bei Hover (Originalblau) */
+    color: var(--primary-color-dark, #2a41b1); /* Dunkelblauer Text bei Hover (Originalblau) */
+    box-shadow: 0 1px 0 #bdbdbd, 0 2px 4px rgba(0,0,0,0.15); /* Reduzierter Schatten */
+    /* Wobble is inherited */
+}
+button.explanation-button:active {
+    background-image: linear-gradient(to top, #f8f9fa, #e9ecef); /* Verlauf umkehren */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.15); /* Innerer Schatten */
+    transform: scale(0.98) translateY(1px); /* Leichter Klick-Effekt */
+    animation: none;
+}
+/* Fehler-Highlight für Erklärung-Button (Bleibt Rot) */
+button.explanation-button.highlight-error {
+    border: 3px solid var(--danger-color);
+    /* Hintergrund/Farbe werden nicht überschrieben, nur Rand/Schatten/Animation */
+    box-shadow: 0 0 12px 3px color-mix(in srgb, var(--danger-color) 70%, transparent);
+    animation: pulse-error 1s infinite alternate;
+}
+@keyframes pulse-error {
+    from { box-shadow: 0 0 8px 1px color-mix(in srgb, var(--danger-color) 70%, transparent); border-color: var(--danger-color); }
+    to   { box-shadow: 0 0 14px 4px color-mix(in srgb, var(--danger-color) 40%, transparent); border-color: color-mix(in srgb, var(--danger-color) 70%, white) ; }
+}
+
+
+/* Schwierigkeits-Buttons */
+/* Button: Grundlagen (GRÜN) */
+#difficulty-selection .button-group button[data-difficulty="grundlagen"] {
+    background-image: linear-gradient(to bottom, color-mix(in srgb, var(--success-color) 80%, white), var(--success-color));
+    color: var(--text-on-primary);
+    border: 1px solid var(--success-color-dark);
+    box-shadow: 0 4px 0 var(--success-color-dark), 0 6px 10px rgba(0,0,0,0.15);
+}
+#difficulty-selection .button-group button[data-difficulty="grundlagen"]:hover {
+    background-image: linear-gradient(to bottom, var(--success-color), color-mix(in srgb, var(--success-color) 80%, white));
+    border-color: color-mix(in srgb, var(--success-color-dark) 80%, black);
+    box-shadow: 0 2px 0 var(--success-color-dark), 0 4px 8px rgba(0,0,0,0.2);
+    /* Wobble is inherited */
+}
+#difficulty-selection .button-group button[data-difficulty="grundlagen"]:active {
+     background-image: linear-gradient(to top, color-mix(in srgb, var(--success-color) 80%, white), var(--success-color));
+     box-shadow: inset 0 1px 3px rgba(0,0,0,0.25);
+     transform: scale(0.98) translateY(1px);
+     animation: none;
+}
+
+/* Button: Fortgeschritten (GOLD/GELB) */
+#difficulty-selection .button-group button[data-difficulty="fortgeschritten"] {
+    background-image: linear-gradient(to bottom, color-mix(in srgb, var(--warning-color) 80%, white), var(--warning-color));
+    color: var(--text-on-warning); /* Dunkler Text */
+    border: 1px solid var(--warning-color-dark);
+    box-shadow: 0 4px 0 var(--warning-color-dark), 0 6px 10px rgba(0,0,0,0.15);
+    font-weight: 700; /* Beibehalten */
+}
+#difficulty-selection .button-group button[data-difficulty="fortgeschritten"]:hover {
+    background-image: linear-gradient(to bottom, var(--warning-color), color-mix(in srgb, var(--warning-color) 80%, white));
+    border-color: color-mix(in srgb, var(--warning-color-dark) 80%, black);
+    box-shadow: 0 2px 0 var(--warning-color-dark), 0 4px 8px rgba(0,0,0,0.2);
+    /* Wobble is inherited */
+}
+#difficulty-selection .button-group button[data-difficulty="fortgeschritten"]:active {
+     background-image: linear-gradient(to top, color-mix(in srgb, var(--warning-color) 80%, white), var(--warning-color));
+     box-shadow: inset 0 1px 3px rgba(0,0,0,0.25);
+     transform: scale(0.98) translateY(1px);
+     animation: none;
+}
+
+/* "Rechenwege erklärt" Button auf Startseite (WEISS/GRAU) */
+/* (Behält seinen eigenen Stil, wird nicht Orange) */
+#main-nav #btn-show-explanations {
+    background-image: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 0 #bdbdbd, 0 3px 5px rgba(0,0,0,0.1);
+}
+#main-nav #btn-show-explanations:hover {
+    background-image: linear-gradient(to bottom, #ffffff, #f1f3f5);
+    border-color: var(--primary-color); /* Original-Blau für Hover-Rand */
+    color: var(--primary-color-dark); /* Original-Blau für Hover-Text */
+    box-shadow: 0 1px 0 #bdbdbd, 0 2px 4px rgba(0,0,0,0.15);
+    /* Wobble wird geerbt */
+}
+#main-nav #btn-show-explanations:active {
+    background-image: linear-gradient(to top, #f8f9fa, #e9ecef);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+    transform: scale(0.98) translateY(1px);
+    animation: none;
+}
+
+
+/* --- Input Felder etc. --- */
+input[type="text"] {
+    padding: 14px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1em;
+    width: 200px;
+    box-sizing: border-box;
+    background-color: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-family: var(--font-family);
+    font-weight: 600;
+}
+input[type="text"]:focus {
+    outline: none;
+    /* Fokusfarbe vielleicht an die neue Hauptfarbe (Orange) anpassen? */
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color) 30%, transparent);
+}
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+.input-line {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    width: 100%;
+    max-width: 320px;
+}
+#input-unit {
+    font-weight: 600;
+    color: var(--text-muted-color);
+    font-size: 1em;
+}
+#btn-check {
+    margin-top: 5px;
+}
+
+
+/* --- Textbereiche (Aufgaben, Feedback etc.) --- */
+#scenario-area {
+    font-style: normal;
+    color: var(--text-muted-color);
+    padding: 15px 18px;
+    background-color: var(--surface-alt-color);
+    border-left: 5px solid var(--primary-color-light); /* Original Hellblau für Szenario */
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    font-size: 1em;
+}
+#scenario-area:empty { display: none; }
+
+#question-area {
+    background-color: var(--surface-alt-color);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    line-height: 1.7;
+    box-sizing: border-box;
+    width: 100%;
+    border: 2px solid var(--border-color);
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+#feedback-area, #solution-area {
+    padding: 18px;
+    border-radius: var(--border-radius);
+    min-height: 45px;
+    line-height: 1.6;
+    box-sizing: border-box;
+    width: 100%;
+    font-weight: 600;
+    border: 2px solid transparent;
+    display: block;
+}
+#feedback-area:empty, #solution-area.hidden {
+    padding: 0;
+    min-height: 0;
+    border: none;
+    background-color: transparent;
+    margin-top: 0;
+    display: none !important;
+    height: 0;
+    overflow: hidden;
+}
+#solution-area:not(.hidden){
+     margin-top: 15px;
+     display: block !important;
+}
+#feedback-area.correct {
+    color: var(--success-color-dark);
+    background-color: color-mix(in srgb, var(--success-color) 20%, transparent);
+    border-color: var(--success-color);
+    display: block !important;
+}
+#feedback-area.incorrect {
+    color: var(--danger-text);
+    background-color: var(--danger-bg-light);
+    border-color: var(--danger-color);
+    display: block !important;
+}
+#solution-area {
+    max-height: 180px;
+    overflow-y: auto;
+    color: var(--info-color);
+    background-color: var(--info-bg-light);
+    border: 2px solid var(--info-border);
+    border-radius: var(--border-radius);
+    padding: 18px;
+    line-height: 1.6;
+    box-sizing: border-box;
+    width: 100%;
+}
+#solution-area strong {
+    font-size: 1.1em;
+    color: var(--info-color);
+    font-weight: 700;
+}
+
+/* --- Erklärungs-Sektion Styling --- */
+.explanation-category-title {
+    font-size: 1.3em; font-weight: 700; color: var(--primary-color-dark);
+    margin-top: 30px; margin-bottom: 15px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+.explanation-category-title:first-child { margin-top: 0; }
+
+.type-list {
+    display: flex; flex-direction: column; gap: 12px;
+    margin-bottom: 25px; padding-left: 0;
+}
+.type-button {
+    background-image: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    text-align: left;
+    padding: 14px 18px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1em;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease-out, box-shadow 0.15s ease-out;
+    min-width: auto;
+}
+.type-button:hover {
+    background-image: linear-gradient(to bottom, #ffffff, #f1f3f5);
+    border-color: var(--primary-color);
+    color: var(--primary-color-dark);
+    cursor: pointer;
+    transform: scale(1.02);
+    box-shadow: var(--shadow-sm);
+}
+.type-button:active {
+    transform: scale(0.99);
+    background-image: linear-gradient(to top, #f8f9fa, #e9ecef);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+#explanation-content-area {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    padding: 30px; margin-top: 25px;
+    border-radius: var(--border-radius);
+}
+#explanation-content-title {
+    color: var(--primary-color-dark); margin-top: 0; margin-bottom: 25px; font-size: 1.6em;
+}
+#explanation-content-body p,
+#explanation-content-body ul,
+#explanation-content-body dl { margin-bottom: 18px; }
+#explanation-content-body strong { color: var(--primary-color-dark); font-weight: 700; }
+
+#explanation-content-body .formula {
+    background-color: var(--surface-alt-color);
+    padding: 20px; border-radius: var(--border-radius);
+    font-family: 'Courier New', Courier, monospace;
+    margin: 20px 0; display: block; white-space: normal;
+    line-height: 1.8; font-size: 1.05em;
+    border: 1px solid #d6dbe2;
+    color: var(--text-color);
+}
+#explanation-content-body .formula .op { color: var(--primary-color); font-weight: bold; }
+#explanation-content-body .formula .unit { color: var(--text-muted-color); }
+
+
+#explanation-content-body .beispiel {
+     border: 1px solid var(--border-color);
+     padding: 25px; margin-top: 25px;
+     background-color: var(--info-bg-light);
+     border-radius: var(--border-radius);
+     border-left: 5px solid var(--primary-color);
+}
+#explanation-content-body .beispiel h4 { margin-top: 0; border: none; color: var(--primary-color-dark); }
+#explanation-content-body .beispiel p { margin-bottom: 10px; }
+#explanation-content-body .beispiel strong { font-size: 1.1em; font-weight: 700; }
+
+/* --- Hilfsklassen und Formelstyling --- */
+.hidden {
+    display: none !important;
+}
+.fraction {
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: middle;
+    text-align: center;
+    margin: 0 0.3em;
+    position: relative;
+    top: -0.1em;
+}
+.numerator {
+    font-size: 0.95em;
+    padding: 0 0.2em 0.15em 0.2em;
+    border-bottom: 1.5px solid currentColor;
+    display: block;
+}
+.denominator {
+    font-size: 0.95em;
+    padding: 0.15em 0.2em 0 0.2em;
+    display: block;
+}
+.unit {
+    font-size: 0.85em;
+    color: var(--text-muted-color);
+    margin-left: 0.2em;
+    font-style: normal;
+}
+.variable {
+    font-style: italic;
+    color: var(--primary-color-dark);
+}
+.op {
+    margin: 0 0.4em;
+    font-weight: bold;
+}
+
+#task-main-content {
+    padding-bottom: 25px;
+}
+#task-controls {
+    /* Keine feste Höhe / Overflow */
+}
+
+/* Animation für Wobble-Buttons */
+@keyframes button-wobble {
+  0% {
+    transform: rotate(-1.5deg) scale(1.02);
+  }
+  50% {
+    transform: rotate(1.5deg) scale(1.02);
+  }
+  100% {
+    transform: rotate(-1.5deg) scale(1.02);
+  }
+}
