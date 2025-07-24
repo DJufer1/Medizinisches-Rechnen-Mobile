@@ -7,7 +7,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Link zur Manifest-Datei -->
+<link rel="manifest" href="manifest.json">
 
+<!-- Theme-Farbe für die Browser-Adressleiste (auf iOS) -->
+<meta name="theme-color" content="#46178f">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/addons/p5.dom.js"></script>
     <link rel="stylesheet" href="style.css">
@@ -83,6 +87,16 @@
         </div>
          <button class="btn-back" id="btn-back-from-explanation">Zurück zum Hauptmenü</button>
     </div>
-
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').then(registration => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, err => {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    });
+  }
+</script>
 </body>
 </html>
