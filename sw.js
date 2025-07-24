@@ -1,6 +1,6 @@
 // KORRIGIERTE VERSION
 
-const CACHE_NAME = 'fage-rechentrainer-v3'; // Version erhöht, um Update zu erzwingen
+const CACHE_NAME = 'fage-rechentrainer-v4'; // Version erhöht, um Update zu erzwingen
 const urlsToCache = [
   './',
   './index.html',
