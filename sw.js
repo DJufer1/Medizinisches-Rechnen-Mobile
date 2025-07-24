@@ -1,35 +1,52 @@
-const CACHE_NAME = 'fage-rechentrainer-v1';
+const CACHE_NAME = 'fage-rechentrainer-v2'; // Wichtig: Bei Änderungen an den Dateien diese Version erhöhen (z.B. v3, v4)
 const urlsToCache = [
-  '/',
-  './index.html', // <-- Sicherer mit ./
-  './style.css',    // <-- Sicherer mit ./
-  './sketch.js',    // <-- Sicherer mit ./
+  './',
+  './index.html',
+  './style.css',
+  './sketch.js',
   'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/addons/p5.dom.js'
+  'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/addons/p5.dom.js',
+  './icon-192.png', // Füge deine Icons hinzu!
+  './icon-512.png'
 ];
 
-// Bei der Installation der App die Dateien im Cache speichern
+// 1. Installation: Dateien im Cache speichern
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Opened cache');
+        console.log('Opened cache and caching files');
         return cache.addAll(urlsToCache);
       })
   );
+  self.skipWaiting();
 });
 
-// Bei jeder Anfrage prüfen, ob die Datei im Cache ist
+// 2. Aktivierung: Alte Caches löschen
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('Deleting old cache:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+  return self.clients.claim();
+});
+
+// 3. Fetch: Anfragen abfangen und aus dem Cache bedienen
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // Wenn die Datei im Cache ist, diese zurückgeben
-        if (response) {
-          return response;
-        }
-        // Ansonsten die Datei aus dem Netzwerk laden
-        return fetch(event.request);
+        // Wenn die Datei im Cache ist, diese zurückgeben.
+        // Ansonsten aus dem Netzwerk laden.
+        return response || fetch(event.request);
       }
     )
   );
