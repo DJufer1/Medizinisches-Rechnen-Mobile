@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FaGe Rechentrainer Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/addons/p5.dom.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="sketch.js" defer></script>
+</head>
+<body>
+    <h1>FaGe Rechentrainer Pro</h1>
+
+    <div id="main-nav" class="controls navigation">
+        <p class="welcome-message">Willkommen! Wähle eine Option, um zu starten.</p>
+        <div class="button-group main-buttons"> <button id="btn-start-practice">Übungsaufgaben</button>
+            <button id="btn-show-explanations">Rechenwege erklärt</button>
+        </div>
+    </div>
+
+    <div id="category-selection" class="controls selection hidden">
+        <h2>Übungskategorie wählen:</h2>
+        <div class="button-group">
+            <button data-main-category="medikamente">Medikamente</button>
+            <button data-main-category="infusionen">Infusionen</button>
+            <button data-main-category="sauerstoff">Sauerstoffverabreichung</button>
+        </div>
+         <button class="btn-back">Zurück zum Hauptmenü</button>
+    </div>
+
+     <div id="difficulty-selection" class="controls selection hidden">
+        <h2>Schwierigkeitsgrad wählen:</h2>
+         <p>Für Kategorie: <strong id="selected-category-name"></strong></p>
+        <div class="button-group">
+            <button data-difficulty="grundlagen">Grundlagen</button>
+            <button data-difficulty="fortgeschritten">Fortgeschritten</button>
+        </div>
+        <button class="btn-back">Zurück zur Kategorieauswahl</button>
+    </div>
+
+    <div id="task-controls" class="controls hidden">
+<h2>Aufgabe (<span id="task-category-difficulty"></span>):</h2>
+
+<div id="task-main-content">
+    <div id="scenario-area"></div>
+    <div id="question-area"></div>
+</div>
+<h2>Ihre Antwort:</h2>
+<div class="input-group">
+     <div class="input-line">
+         <input type="text" id="input-answer" placeholder="Antwort eingeben">
+         <span id="input-unit"></span>
+     </div>
+     <button id="btn-check">Prüfen</button>
+</div>
+
+<div id="feedback-area"></div>
+<div id="solution-area" class="hidden"></div>
+
+<div class="button-group task-actions" style="/* bestehende inline styles */">
+   <div>
+       <button id="btn-show-explanation" class="hidden explanation-button">Erklärung</button>
+       <button id="btn-next-task" class="next-button">Nächste Aufgabe</button>
+   </div>
+   <button class="btn-back">Zurück zur Auswahl</button>
+</div>
+    </div>
+
+    <div id="explanation-section" class="controls hidden">
+        <h2 id="explanation-title">Rechenwege erklärt</h2>
+        <div id="explanation-selection-area">
+            <p>Lade Kategorien...</p>
+        </div>
+        <div id="explanation-content-area" class="hidden">
+             <h3 id="explanation-content-title"></h3>
+             <div id="explanation-content-body"></div>
+             <button class="btn-back" id="btn-back-from-content">Zurück zur Übersicht</button>
+        </div>
+         <button class="btn-back" id="btn-back-from-explanation">Zurück zum Hauptmenü</button>
+    </div>
+
+</body>
+</html>
