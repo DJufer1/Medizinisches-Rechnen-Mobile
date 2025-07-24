@@ -4,6 +4,10 @@ let currentAppState = 'menu';
 let currentMainCategory = null; // Speichert die Hauptkategorie (z.B. 'medikamente')
 let currentDifficulty = null; // Speichert die Schwierigkeit (z.B. 'grundlagen')
 let currentTask = null; // Das aktuell angezeigte Aufgabenobjekt inkl. explanationKeys
+// --- Globale Variablen ---
+let deferredPrompt; // Für das Installations-Event
+let installButton;  // Für den Installations-Button
+// ... (der Rest deiner Variablen bleibt gleich)
 
 // --- Referenzen zu HTML Elementen ---
 let mainNavDiv, categorySelectionDiv, difficultySelectionDiv, taskControlsDiv, explanationSectionDiv;
@@ -780,6 +784,7 @@ const rechenwegeErklaerungen = {
 function setup() {
     fetchAllDOMElements();
     attachStaticEventListeners();
+    setupPwaInstall();
     navigateToState('menu');
     console.log("App initialisiert. Status:", currentAppState);
 }
@@ -820,6 +825,7 @@ function fetchAllDOMElements() {
     explanationContentBody = select('#explanation-content-body');
     btnBackFromContent = select('#btn-back-from-content'); // Zurück vom Inhalt zur Übersicht
     btnShowExplanation = select('#btn-show-explanation'); // Der neue Erklärung-Button
+    installButton = select('#btn-install');
 }
 
 function attachStaticEventListeners() {
@@ -1306,5 +1312,42 @@ function clearSpecificListeners(prefixSelector) {
           // Da wir aber prüfen, bevor wir hinzufügen, ist das Löschen der Markierung hier ausreichend.
     });
 }
+// NEUE FUNKTION AM ENDE VON sketch.js HINZUFÜGEN
 
+function setupPwaInstall() {
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Verhindert, dass Chrome auf Android 68+ die Mini-Infobar anzeigt
+        e.preventDefault();
+        // Speichert das Event, damit es später ausgelöst werden kann.
+        deferredPrompt = e;
+        // Zeigt unseren benutzerdefinierten Installations-Button an
+        if (installButton) {
+            installButton.removeClass('hidden');
+            console.log('`beforeinstallprompt` event was fired.');
+        }
+    });
+
+    if (installButton) {
+        installButton.mousePressed(async () => {
+            // Verstecke unseren Button, da der Dialog jetzt gezeigt wird
+            installButton.addClass('hidden');
+            // Zeige den Installations-Dialog an
+            deferredPrompt.prompt();
+            // Warte auf die Antwort des Benutzers
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response to the install prompt: ${outcome}`);
+            // Wir können den Dialog nur einmal verwenden.
+            deferredPrompt = null;
+        });
+    }
+
+    window.addEventListener('appinstalled', () => {
+        // Verstecke den Button, falls die App installiert wurde
+        if (installButton) {
+            installButton.addClass('hidden');
+        }
+        deferredPrompt = null;
+        console.log('PWA was installed');
+    });
+}
 // --- Ende sketch.js ---
