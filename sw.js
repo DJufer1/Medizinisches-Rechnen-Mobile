@@ -1,13 +1,14 @@
-const CACHE_NAME = 'fage-rechentrainer-v2'; // Wichtig: Bei Änderungen an den Dateien diese Version erhöhen (z.B. v3, v4)
+// KORRIGIERTE VERSION
+
+const CACHE_NAME = 'fage-rechentrainer-v3'; // Version erhöht, um Update zu erzwingen
 const urlsToCache = [
   './',
   './index.html',
   './style.css',
   './sketch.js',
   'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/addons/p5.dom.js',
-  './icon-192.png', // Füge deine Icons hinzu!
-  './icon-512.png'
+  'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/addons/p5.dom.js'
+  // Die Zeilen für die lokalen Icons wurden entfernt, da sie von einer URL geladen werden.
 ];
 
 // 1. Installation: Dateien im Cache speichern
